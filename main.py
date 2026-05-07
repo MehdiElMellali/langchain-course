@@ -9,7 +9,8 @@ from langchain.tools import tool
 from langchain_core.messages import HumanMessage
 from langchain_openai import ChatOpenAI
 from langchain_tavily import TavilySearch
-
+from langchain_ollama import ChatOllama
+from langchain_groq import ChatGroq
 
 class Source(BaseModel):
     """Schema for a source used by the agent"""
@@ -26,7 +27,14 @@ class AgentResponse(BaseModel):
     )
 
 
-llm = ChatOpenAI(model="gpt-5")
+# llm = ChatOpenAI(model="gpt-5")
+# llm = ChatOllama(
+#     model="gemma3:1b"
+# )
+
+llm = ChatGroq(
+    model="llama-3.3-70b-versatile"
+)
 tools = [TavilySearch()]
 agent = create_agent(model=llm, tools=tools, response_format=AgentResponse)
 
